@@ -21,5 +21,5 @@ jobs:
 
       # Step 2: Runs a basic Hello World shell command
       - name: Print Hello World
-        run: "Hello, World! Your First Github Action is running Successfully."
+        run: echo "Hello, World! Your First Github Action is running Successfully."
 
