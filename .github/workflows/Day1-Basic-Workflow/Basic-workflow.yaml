@@ -1,0 +1,25 @@
+# The name of the workflow as it will appear in the GitHub Actions tab
+name: Simple Hello World Workflow
+
+# Controls when the workflow will run (Trigger)
+on:
+  push:
+    branch:
+      - develop
+
+# A workflow run is made up of one or more jobs
+jobs:
+  Hello-World:
+     # The type of virtual machine runner the job will run on
+    runs-on: [ubuntu-latest]
+    
+    # Steps represent a sequence of tasks that will be executed
+    steps: 
+      # Step 1: Clones your repository code onto the runner
+      - name: Checkout Repo Code
+        uses: actions/checkout@v4
+
+      # Step 2: Runs a basic Hello World shell command
+      - name: Print Hello World
+        run: "Hello, World! Your First Github Action is running Successfully."
+
