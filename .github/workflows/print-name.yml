@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - .github/workflows/print-name.yaml
+      - .github/workflows/print-name.yml
       
 jobs:
   printing:
