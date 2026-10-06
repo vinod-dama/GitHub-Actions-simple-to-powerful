@@ -1,0 +1,13 @@
+name: print-name
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - .github/workflows/print-name.yaml
+jobs:
+  printing:
+    runs-on: ubuntu-latest
+    steps:
+      - name: print-name
+        run: echo "Added print-name"
