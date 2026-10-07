@@ -54,4 +54,4 @@ jobs:
           # Replace this with real deployment commands, for example:
           # python -m gunicorn app:app
           # docker build -t my-app .
-          # docker push my-app:latest
+          # docker push my-app:latest 
