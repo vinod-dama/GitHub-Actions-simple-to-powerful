@@ -1,0 +1,96 @@
+name: build-test-deploy
+
+on: 
+  push: 
+    branches:
+      - develop
+  
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with: 
+          python-version: "3.11"
+
+      - name: Install Dependencies 
+        run: | 
+          cd application/
+          python install --upgrade pip
+          python install -r requirements.txt  
+
+      - name: Build the application
+        run: | 
+          cd application/
+          python -m py_compile .
+          echo "Python application build successfully"
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        
+      - name: Install Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+      
+      - name: Install dependencies
+        run: |
+          cd application/
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+      
+      - name: Run tests
+        run: |
+          cd application/
+          pytest --cov=. --cov-report=xml --cov-report=html
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          files: ./application/coverage.xml
+
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          cd application/
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Deploy application
+        run: |
+          cd application/
+          echo "Deploying Python application to production!"
+
+
+      
+          
+
+
+
+
+    
