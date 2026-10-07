@@ -25,8 +25,8 @@ jobs:
       - name: Install Dependencies 
         run: | 
           cd application/
-          python install --upgrade pip
-          python install -r requirements.txt  
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
       - name: Build the application
         run: | 
