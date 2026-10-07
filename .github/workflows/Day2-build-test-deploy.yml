@@ -3,7 +3,7 @@ name: CI/CD Pipeline for Python app
 on:
   push:
     branches:
-      - main
+      - develop
   pull_request:
     branches:
       - main
