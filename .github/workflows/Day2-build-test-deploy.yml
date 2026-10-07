@@ -39,7 +39,7 @@ jobs:
 
       - name: Run tests
         run: |
-          cd ${{ env.APP_DIR }}
+          cd ${{ env.APP_DIR }}/tests/
           pytest --cov=. --cov-report=xml --cov-report=html
 
       - name: Upload coverage reports
