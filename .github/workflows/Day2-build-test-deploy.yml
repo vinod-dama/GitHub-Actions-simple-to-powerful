@@ -1,69 +1,19 @@
-name: build-test-deploy
+name: CI/CD Pipeline for Python app
 
-on: 
-  push: 
+on:
+  push:
     branches:
-      - develop
-  
+      - main
   pull_request:
     branches:
       - main
 
+env:
+  PYTHON_VERSION: "3.11"
+  APP_DIR: application
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with: 
-          python-version: "3.11"
-
-      - name: Install Dependencies 
-        run: | 
-          cd application/
-          pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Build the application
-        run: | 
-          cd application/
-          python -m py_compile .
-          echo "Python application build successfully"
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-        
-      - name: Install Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-      
-      - name: Install dependencies
-        run: |
-          cd application/
-          pip install --upgrade pip
-          pip install -r requirements.txt
-          pip install pytest pytest-cov
-      
-      - name: Run tests
-        run: |
-          cd application/
-          pytest --cov=. --cov-report=xml --cov-report=html
-
-      - name: Upload coverage reports
-        uses: codecov/codecov-action@v3
-        with:
-          files: ./application/coverage.xml
-
-
-  deploy:
+  build-test-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -73,24 +23,35 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install dependencies
         run: |
-          cd application/
-          pip install --upgrade pip
+          cd ${{ env.APP_DIR }}
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Build the application
+        run: |
+          cd ${{ env.APP_DIR }}
+          python -m compileall .
+
+      - name: Run tests
+        run: |
+          cd ${{ env.APP_DIR }}
+          pytest --cov=. --cov-report=xml --cov-report=html
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          files: ${{ env.APP_DIR }}/coverage.xml
 
       - name: Deploy application
         run: |
-          cd application/
+          cd ${{ env.APP_DIR }}
           echo "Deploying Python application to production!"
-
-
-      
-          
-
-
-
-
-    
+          # Replace this with real deployment commands, for example:
+          # python -m gunicorn app:app
+          # docker build -t my-app .
+          # docker push my-app:latest
