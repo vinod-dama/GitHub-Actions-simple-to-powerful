@@ -52,7 +52,3 @@ jobs:
         run: |
           cd ${{ env.APP_DIR }}
           echo "Deploying Python application to production!"
-          # Replace this with real deployment commands, for example:
-          # python -m gunicorn app:app
-          # docker build -t my-app .
-          # docker push my-app:latest 
