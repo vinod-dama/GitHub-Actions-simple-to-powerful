@@ -1,0 +1,54 @@
+name: CI/CD Pipeline for Python app
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - main
+
+env:
+  PYTHON_VERSION: "3.11"
+  APP_DIR: application
+
+jobs:
+  build-test-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: |
+          cd ${{ env.APP_DIR }}
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-cov
+
+      - name: Build the application
+        run: |
+          cd ${{ env.APP_DIR }}
+          python -m compileall .
+
+      - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+        run: |
+          python -m pytest application/tests/test.py -v --cov=application --cov-report=xml --cov-report=html
+
+      - name: Upload coverage reports
+        uses: codecov/codecov-action@v3
+        with:
+          files: ${{ env.APP_DIR }}/coverage.xml
+
+      - name: Deploy application
+        run: |
+          cd ${{ env.APP_DIR }}
+          echo "Deploying Python application to production!"
