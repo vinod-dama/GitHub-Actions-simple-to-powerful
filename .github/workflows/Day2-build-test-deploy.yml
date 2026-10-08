@@ -38,6 +38,8 @@ jobs:
           python -m compileall .
 
       - name: Run tests
+        env:
+          PYTHONPATH: ${{ github.workspace }}
         run: |
           python -m pytest application/tests/test.py -v --cov=application --cov-report=xml --cov-report=html
 

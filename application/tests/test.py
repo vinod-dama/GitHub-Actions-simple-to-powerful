@@ -1,8 +1,8 @@
 # application/test_app.py
-from ..app import app
+from application.app import app
 
 def test_hello_world():
     client = app.test_client()
     response = client.get("/")
     assert response.status_code == 200
-    assert response.data.decode("utf-8") == "Hello, World!"
+    assert response.data.decode("utf-8") == "Hello, World!" import app
