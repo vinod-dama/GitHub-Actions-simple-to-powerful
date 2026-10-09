@@ -39,16 +39,16 @@ jobs:
                 echo "Full tree:"
                 find artifacts/ -type f 2>/dev/null || echo "No artifacts found"
 
-            
+            - name: Remove .gitkeep before upload
+              run: |
+                find artifacts/mlops/ -name ".gitkeep" -delete
+                
             - name: Upload ML Artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: mlops-${{ matrix.python-version }}-${{ github.run_id }}
-                path: |
-                  artifacts/mlops/*.pkl
-                  artifacts/mlops/*.json
+                path: artifacts/mlops/*.pkl
                 retention-days: 30
-                if-no-files-found: error
 
             
               
