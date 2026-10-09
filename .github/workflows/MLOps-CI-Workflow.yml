@@ -53,7 +53,7 @@ jobs:
               uses: actions/upload-artifact@v4
               with:
                 name: mlops-${{ matrix.python-version }}-${{ github.run_id }}
-                path: artifacts/mlops/*.pkl
+                path: artifacts/mlops/
                 retention-days: 30
 
             
