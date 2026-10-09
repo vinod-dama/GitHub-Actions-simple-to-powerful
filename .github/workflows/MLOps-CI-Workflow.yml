@@ -23,12 +23,13 @@ jobs:
                 python-version: ${{ matrix.python-version }}
 
             - name: Upgrade Python-pip
-              run: python -m pip install --upgrade pip setuptools wheel
+              run: |
+                python -m pip install --upgrade pip setuptools wheel
 
 
             - name: Install Dependecies
               run: |
-                - python -m pip install -r mlops/mlops-requirements.txt
+                python -m pip install -r mlops/mlops-requirements.txt
             
             - name: Train Model
               run: | 
