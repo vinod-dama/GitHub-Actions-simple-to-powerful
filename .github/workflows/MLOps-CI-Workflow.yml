@@ -33,16 +33,22 @@ jobs:
                 python -m pip install -r mlops/mlops-requirements.txt
             
             - name: Train Model
-              run: | 
-                python mlops/train.py
-                ls -lah artifacts/mlops/ || echo "Directory does not exist!"
-                echo "Full tree:"
-                find artifacts/ -type f 2>/dev/null || echo "No artifacts found"
-
-            - name: Remove .gitkeep before upload
               run: |
-                find artifacts/mlops/ -name ".gitkeep" -delete
-                
+                python mlops/train.py
+                echo "---- repo root ----"
+                ls -la
+                echo "---- artifacts ----"
+                ls -la artifacts || true
+                echo "---- artifacts/mlops ----"
+                ls -la artifacts/mlops || true
+                echo "---- files found ----"
+                find artifacts/mlops -maxdepth 1 -type f ! -name ".gitkeep" -print
+
+            - name: Verify ML artifacts exist
+              run: |
+                test "$(find artifacts/mlops -maxdepth 1 -type f ! -name '.gitkeep' | wc -l)" -gt 0
+
+
             - name: Upload ML Artifacts
               uses: actions/upload-artifact@v4
               with:
