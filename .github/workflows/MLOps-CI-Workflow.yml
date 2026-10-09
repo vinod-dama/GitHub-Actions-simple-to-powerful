@@ -33,19 +33,17 @@ jobs:
                 python -m pip install -r mlops/mlops-requirements.txt
             
             - name: Train Model
-              run: | 
-                python mlops/train.py
-                ls -lah artifacts/mlops/ || echo "Directory does not exist!"
-                echo "Full tree:"
-                find artifacts/ -type f 2>/dev/null || echo "No artifacts found"
+              run: |
+                 python mlops/train.py
+                 ls -la artifacts/mlops
+                 find artifacts/mlops -maxdepth 1 -type f ! -name ".gitkeep" -print
 
-            
             - name: Upload ML Artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: mlops-${{ matrix.python-version }}-${{ github.run_id }}
                 path: artifacts/mlops/
-                if-no-files-found: error
+                retention-days: 30
 
             
               
