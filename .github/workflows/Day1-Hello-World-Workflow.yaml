@@ -6,6 +6,8 @@ on:
   push:
     branches:
       - develop
+    paths:
+      - .github/workflows/Day1-Hello-World-Workflow.yaml
 
 # A workflow run is made up of one or more jobs
 jobs:
