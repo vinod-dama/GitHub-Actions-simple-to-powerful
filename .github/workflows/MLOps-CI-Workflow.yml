@@ -45,8 +45,8 @@ jobs:
               with:
                 name: mlops-${{ matrix.python-version }}-${{ github.run_id }}
                 path: |
-                  artifacts/mlops/
-                  !artifacts/mlops/.gitkeep
+                  artifacts/mlops/*.pkl
+                  artifacts/mlops/*.json
                 retention-days: 30
                 if-no-files-found: error
 
