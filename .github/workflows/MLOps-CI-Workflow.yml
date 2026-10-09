@@ -35,14 +35,17 @@ jobs:
             - name: Train Model
               run: | 
                 python mlops/train.py
-                ls -la artifacts/mlops
+                ls -lah artifacts/mlops/ || echo "Directory does not exist!"
+                echo "Full tree:"
+                find artifacts/ -type f 2>/dev/null || echo "No artifacts found"
+
             
             - name: Upload ML Artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: mlops-${{ matrix.python-version }}-${{ github.run_id }}
                 path: artifacts/mlops/
-
+                if-no-files-found: error
 
             
               
