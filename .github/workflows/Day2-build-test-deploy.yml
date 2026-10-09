@@ -4,9 +4,14 @@ on:
   push:
     branches:
       - develop
+    paths: 
+      - .github/workflows/Day2-Build-Test-Deploy.yml
   pull_request:
     branches:
       - main
+    paths:
+      - .github/workflows/Day2-Build-Test-Deploy.yml
+    
 
 env:
   PYTHON_VERSION: "3.11"
