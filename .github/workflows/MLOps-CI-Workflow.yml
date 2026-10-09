@@ -4,7 +4,8 @@ on:
     push:
         branches: [develop, main]
         paths:
-            -  .github/workflows/MLOps-CI-Workflow.yml
+            - mlops/**
+            - .github/workflows/MLOps-CI-Workflow.yml
 
 jobs:
     mlops-matrix-workflow:
