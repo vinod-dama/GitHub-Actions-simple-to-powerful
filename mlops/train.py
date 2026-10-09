@@ -22,13 +22,13 @@ def main():
 
     # Save model
     os.makedirs("artifacts", exist_ok=True)
-    model_path = os.path.join("artifacts", "model.pkl")
+    model_path = os.path.join("artifacts/mlops", "model.pkl")
     joblib.dump(model, model_path)
 
     # Save a tiny metrics file
     acc = model.score(X_test, y_test)
     metrics = {"accuracy": float(acc)}
-    with open(os.path.join("artifacts", "metrics.json"), "w") as f:
+    with open(os.path.join("artifacts/mlops", "metrics.json"), "w") as f:
         json.dump(metrics, f)
 
     print(f"Saved model to {model_path}")

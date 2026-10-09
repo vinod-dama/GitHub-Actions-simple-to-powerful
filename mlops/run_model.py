@@ -10,7 +10,7 @@ from pathlib import Path
 import numpy as np
 import joblib
 
-MODEL_PATH = Path("artifacts/model.pkl")
+MODEL_PATH = Path("artifacts/mlops/model.pkl")
 
 def load_model():
     if not MODEL_PATH.exists():
