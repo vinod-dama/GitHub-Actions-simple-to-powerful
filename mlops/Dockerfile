@@ -2,10 +2,10 @@ FROM python:3.12-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY mlops-requirements.txt .
 
 RUN python -m pip install --upgrade pip
-RUN python -m pip install mlops-requirements.txt
+RUN python -m pip install -r mlops-requirements.txt
 
 COPY . .
 
