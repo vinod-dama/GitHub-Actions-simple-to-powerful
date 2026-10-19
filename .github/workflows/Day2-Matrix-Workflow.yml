@@ -25,7 +25,7 @@ jobs:
             matrix: 
                 # This matrix will create 3 parallel job runs:
                 # one with node-version 12, one with 14, and one with 16.
-                python-version: [3.8, 3.9, 3.10, 3.11]
+                python-version: ["3.8", "3.9", "3.10", "3.11"]
 
         # Steps represent a sequence of tasks that will be executed
         steps:
