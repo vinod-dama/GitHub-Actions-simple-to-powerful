@@ -1,0 +1,54 @@
+# The name of the workflow as it will appear in the GitHub Actions tab
+name: Matrix Workflow
+
+# Controls when the workflow will run (Trigger)
+on:
+    push: 
+        branches:
+            - develop
+        paths:
+            - .github/workflows/Day2-Matrix-Workflow.yml
+    pull_request:
+        branches:
+            - main
+        paths:
+            - .github/workflow/Day2-Matrix-Workflow.yml
+            
+# A workflow run is made up of one or more jobs
+jobs:
+    # A job is a set of steps that run on a runner.
+    Matrix-Worfklow: 
+        # The type of runner this job runs on. 'ubuntu-latest' is a common choice.
+        runs-on: [ubuntu-latest]
+
+        strategy:
+            matrix: 
+                # This matrix will create 3 parallel job runs:
+                # one with node-version 12, one with 14, and one with 16.
+                python-version: ["3.8", "3.9", "3.10", "3.11"]
+
+        # Steps represent a sequence of tasks that will be executed
+        steps:
+            # 1) Check out the repository so the runner has the code
+            - name: Checkout Repo Code
+              uses: actions/checkout@v4
+            
+            # 2) Set up the Python version from the matrix
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with: 
+                # This tells the action which Node version to install.
+                # The `${{ matrix.python-version }}` expression is replaced per matrix entry
+                # (3.8, then 3.9, then 3.10, then 3.11).
+                python-version: ${{ matrix.python-version }}
+
+
+# Notes for beginners:
+# - Indentation is significant in YAML. Use 2 spaces per level (as shown).
+# - The matrix runs the same steps multiple times in parallel — one run per python version.
+# - Pin action versions (e.g., actions/setup-python@v4) to avoid unexpected changes
+
+            
+
+        
+            
