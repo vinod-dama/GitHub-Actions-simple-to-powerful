@@ -2,15 +2,15 @@
 name: Matrix Workflow
 
 # Controls when the workflow will run (Trigger)
-on: 
-    push:
+on:
+    push: 
         branches:
-           - develop
+            - develop
         paths:
-            - .github/workflow/Day2-Matrix-Workflow.yml
+            - . github/workflows/Day2-Matrix-Workflow.yml
     pull_request:
-        branches: 
-            - main 
+        branches:
+            - main
         paths:
             - .github/workflow/Day2-Matrix-Workflow.yml
             
@@ -25,27 +25,28 @@ jobs:
             matrix: 
                 # This matrix will create 3 parallel job runs:
                 # one with node-version 12, one with 14, and one with 16.
-                node-versions: [12, 14, 16]
+                python-version: [3.8, 3.9, 3.10, 3.11]
 
         # Steps represent a sequence of tasks that will be executed
         steps:
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
+            # 1) Check out the repository so the runner has the code
+            - name: Checkout Repo Code
+              uses: actions/checkout@v4
+            
+            # 2) Set up the Python version from the matrix
+            - name: Setup Python
+              uses: actions/setup-python@v4
               with: 
                 # This tells the action which Node version to install.
-                # The `${{ matrix.node-version }}` expression is replaced per matrix entry
-                # (12, then 14, then 16).
-                node-version: ${{ matrix.node-versions }}
+                # The `${{ matrix.python-version }}` expression is replaced per matrix entry
+                # (3.8, then 3.9, then 3.10, then 3.11).
+                python-version: ${{ matrix.python-version }}
 
 
 # Notes for beginners:
 # - Indentation is significant in YAML. Use 2 spaces per level (as shown).
-# - The matrix runs the same steps multiple times in parallel — one run per Node version.
-# - Typical next steps (not included) are:
-#     - Checkout the repo: uses: actions/checkout@v4
-#     - Install dependencies: run: npm install
-#     - Run tests: run: npm test
-# - Pin action versions (e.g., actions/setup-node@v3) to avoid unexpected changes
+# - The matrix runs the same steps multiple times in parallel — one run per python version.
+# - Pin action versions (e.g., actions/setup-python@v4) to avoid unexpected changes
 
             
 
