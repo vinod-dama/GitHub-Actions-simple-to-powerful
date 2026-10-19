@@ -8,6 +8,11 @@ on:
            - develop
         paths:
             - .github/workflow/Day2-Matrix-Workflow.yml
+    pull_request:
+        branches: 
+            - main 
+        paths:
+            - .github/workflow/Day2-Matrix-Workflow.yml
             
 # A workflow run is made up of one or more jobs
 jobs:
